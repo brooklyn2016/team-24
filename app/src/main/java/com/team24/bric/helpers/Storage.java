@@ -19,23 +19,31 @@ public class Storage {
     /*
     KEYS
      */
-    private static final String LOGGED_IN_KEY = "logged_in";
+    private static final String USER_NAME_KEY = "user_name";
+    private static final String USER_EMAIL_KEY = "user_email";
 
     /**
      * Check if user is currently logged in.
      * @return boolean representing whether or not user is currently logged in
      */
     public static boolean isLoggedIn() {
-        return PREFS.getBoolean(LOGGED_IN_KEY, false);
+        return PREFS.getString(USER_NAME_KEY, null) != null;
     }
 
     /**
-     * Logs user in/out
-     * @param loggedIn boolean representing whether the user should be logged in (true) or out
-     *                 (false)
+     * Logs user in with user name and email provided
+     * @param name user's name
+     * @param email  user's email
      */
-    public static void setLogin(boolean loggedIn) {
-        EDITOR.putBoolean(LOGGED_IN_KEY, loggedIn);
+    public static void logIn(String name, String email) {
+        EDITOR.putString(USER_NAME_KEY, name);
+        EDITOR.putString(USER_EMAIL_KEY, email);
         EDITOR.commit();
+    }
+
+    public static void logOut() {
+        EDITOR.putString(USER_NAME_KEY, null);
+        EDITOR.putString(USER_EMAIL_KEY, null);
+
     }
 }

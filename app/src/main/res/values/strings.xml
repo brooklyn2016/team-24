@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">BRIC</string>
-
-
         <string name="edit_message">something text </string>
         <string name="upload_button">Upload File</string>
         <string name="facebook_app_id">1198615923529483</string>
-
-
 </resources>

@@ -12,16 +12,15 @@
         android:theme="@style/MyMaterialTheme"
         android:name=".BricApplication">
         <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SplashscreenActivity">
-        </activity>
         <activity android:name=".LoginActivity">
-
         </activity>
         <activity android:name=".UploadActivity">
         </activity>
@@ -31,7 +30,9 @@
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+                   android:value="@string/facebook_app_id"/>
 
     </application>
 
