@@ -2,11 +2,21 @@ package com.team24_jpm.bric;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
 
 public class UploadActivity extends AppCompatActivity {
 
@@ -23,9 +33,6 @@ public class UploadActivity extends AppCompatActivity {
                 Intent action = new Intent(Intent.ACTION_GET_CONTENT);
                 action = action.setType("file/*").addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(action, reqCode);
-
-                // Runs immediately, causing getPath to run on a Null object. Fix
-
             }
 
 
@@ -36,8 +43,21 @@ public class UploadActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             String s = data.getData().getPath();
-            Log.d("Upload Activity", s);
+            //Log.d("Upload Activity", s);
+            addtoFireBase(s);
         }
+
+
+    }
+
+    private void addtoFireBase(String s) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://bric-dd7cd.appspot.com");
+        
+
+
+
 
     }
 }
