@@ -90,6 +90,9 @@ var processError = function(senderID, prevMessage, metadata) {
 
 var processIsEvent = function(senderID, prevMessage, metadata) {
   var mess = prevMessage.toUpperCase();
+  if (!mess) {
+    sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
+  }
   if (mess === 'YES') {
     metadata.nextAction = 'eventCategory';
     sendTextMessage(senderID, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
