@@ -44,7 +44,7 @@ public class UploadActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             String s = data.getData().getPath();
-            //Log.d("Upload Activity", s);
+            // Log.d("Upload Activity", s);
             addtoFireBase(s);
         }
 
