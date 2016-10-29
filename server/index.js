@@ -121,20 +121,35 @@ var processSubject = function(senderID, prevMessage, metadata) {
   sendTextMessage(senderID, 'What is your address?', metadata);
 }
 
-var processError = function(senderID, prevMessage, metadata) {
-
+var processAddr1 = function(senderID, prevMessage, metadata) {
+  metadata.addr1 = prevMessage;
+  metadata.nextAction = 'addr2';
+  sendTextMessage(senderID, 'What is the second part of your address (if applicable, or None if none)?', metadata);
 }
 
-var processError = function(senderID, prevMessage, metadata) {
-
+var processAddr2 = function(senderID, prevMessage, metadata) {
+  metadata.addr2 = (prevMessage.toUpperCase === 'NONE') ? '' : prevMessage;
+  metadata.nextAction = 'What is your phone number?';
 }
 
-var processError = function(senderID, prevMessage, metadata) {
-
+var processPhone = function(senderID, prevMessage, metadata) {
+  metadata.phone = prevMessage;
+  metadata.isSubmitting = false;
+  metadata.nextAction = undefined;
+  sendTextMessage(senderID, message, metadata);
 }
 
 var sendTextMessage = function(senderID, message, metadata) {
-
+  var stringedMeta = JSON.stringify(metadata);
+  var messageData = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: message,
+      metadata: metadata
+    }
+  }
 }
 
 var onReceivedMessage = function(e) {
