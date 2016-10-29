@@ -122,12 +122,12 @@ var processEventCategory = function(senderID, recipientid, prevMessage, metadata
 }
 
 var processSubject = function(senderID, recipientid, prevMessage, metadata) {
+  var categories = ['family-friendly', 'comedy'];
   var num = parseInt(prevMessage);
-  if (isNaN(num) || !num || num > events.length + 1) {
+  if (isNaN(num) || !num || num > categories.length + 1) {
     sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
     return;
   }
-  var categories = ['family-friendly', 'comedy'];
   metadata.tag = (num === categories.length + 1) ? 'Other' : categories[num];
   metadata.nextAction = 'addr1';
   sendTextMessage(senderID, recipientid, 'What is your address?', metadata);
