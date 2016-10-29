@@ -51,10 +51,7 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8000;
 
-https.createServer({
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-}, app).listen(port);
+app.listen(port);
 
 app.get('/', function(req, res) {
   res.send(200, 'Hello!')
