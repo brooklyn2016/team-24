@@ -2,6 +2,8 @@ var express = require('express');
 var firebase = require('firebase');
 var request = require('request');
 var bodyParser = require('body-parser');
+var https = require('https');
+var fs = require('fs');
 
 // Initialize Firebase
 firebase.initializeApp({
@@ -46,6 +48,11 @@ submissionsRef.orderByChild('emailConfirmationSent').equalTo(null).on('child_cha
 
 var app = express();
 app.use(bodyParser.json());
+
+https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}, app).listen(8000);
 
 app.get('/', function(req, res) {
   res.send(200, 'Hello!')
@@ -104,5 +111,3 @@ app.post('/messenger_webhook', function(req, res){
     res.sendStatus(200);
   }
 })
-
-app.listen(8000);
