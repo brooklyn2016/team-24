@@ -178,6 +178,7 @@ var onReceivedMessage = function(e) {
         'Is your video about a current event?\n', meta);
     }
   } else if (message.text) {
+    console.log(message);
     if (!meta.isSubmitting) {
       processError(senderID, message, meta);
       return;
