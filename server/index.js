@@ -111,11 +111,11 @@ var processIsEvent = function(senderID, recipientid, prevMessage, metadata) {
 
 var processEventCategory = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
+  var events = ['Father’s Day', 'Afropunk', 'House Party']
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
     return;
   }
-  var events = ['Father’s Day', 'Afropunk', 'House Party']
   metadata.tag = (num === events.length + 1) ? 'Other' : events[num];
   metadata.nextAction = 'addr1';
   sendTextMessage(senderID, recipientid, 'What is your address?', metadata);
