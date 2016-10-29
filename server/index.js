@@ -150,6 +150,7 @@ var sendTextMessage = function(senderID, message, metadata) {
       metadata: metadata
     }
   };
+  console.log(messageData)
   request({url: 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAI4Xci81OMBAIsdjgPov4fvq1tBk1uM8x2Puz9Vnnh7ZCfz0Ej1hVP0lTN2Gnzz59MBIRv6t8IDdVZB1WZBedVwJRyWg0hXMZCO1ZAxRjU7VNw71vMKnhxOP6Lvm95DND92NufegPYykCDYZAt58qvYIDuI24eEqJ4LuVLGQMTAZDZD',
     method: 'POST',
     json: messageData
@@ -157,7 +158,6 @@ var sendTextMessage = function(senderID, message, metadata) {
 }
 
 var onReceivedMessage = function(e) {
-  console.log(e);
   var senderID = e.sender.id;
   var recipientID = e.recipient.id;
   var message = e.message;
