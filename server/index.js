@@ -63,4 +63,46 @@ app.post('/send_email_confirmation', function(req, res) {
   res.sendStatus(200);
 })
 
+// messenger webhook
+app.get('/messenger_webhook', function(req, res) {
+  if (req.query['hub.mode'] === 'subscribe' &&
+      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+    console.log("Validating webhook");
+    res.status(200).send(req.query['hub.challenge']);
+  } else {
+    console.error("Failed validation. Make sure the validation tokens match.");
+    res.sendStatus(403);
+  }
+});
+
+var onReceivedMessage = function(e) {
+  // Chatbot goes here
+}
+
+app.post('/messenger_webhook', function(req, res){
+  var data = req.body;
+  if (data.object === 'page') {
+    // Iterate over each entry
+    // There may be multiple if batched
+    data.entry.forEach(function(pageEntry) {
+      var pageID = pageEntry.id;
+      var timeOfEvent = pageEntry.time;
+
+      // Iterate over each messaging event
+      pageEntry.messaging.forEach(function(messagingEvent) {
+        // don't do anything if you don't receive a message
+        if (messagingEvent.message) {
+          onReceivedMessage(messagingEvent);
+        }
+      });
+    });
+
+    // Assume all went well.
+    //
+    // You must send back a 200, within 20 seconds, to let us know you've
+    // successfully received the callback. Otherwise, the request will time out.
+    res.sendStatus(200);
+  }
+})
+
 app.listen(8000);
