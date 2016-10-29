@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.team24_jpm.bric.R;
 import com.team24_jpm.bric.adapters.TopicAdapter;
+import com.team24_jpm.bric.helpers.SpacesItemDecoration;
 import com.team24_jpm.bric.helpers.Topic;
 
 /**
@@ -46,6 +47,8 @@ public class TopicFragment extends Fragment {
         recycler = (RecyclerView) mainView.findViewById(R.id.fragment_recycler);
         recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recycler.setAdapter(new TopicAdapter());
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
+        recycler.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         return mainView;
     }
