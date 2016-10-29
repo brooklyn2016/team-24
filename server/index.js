@@ -87,24 +87,24 @@ app.get('/messenger_webhook', function(req, res) {
 var processError = function(senderID, recipientid, prevMessage, metadata) {
     metadata.nextAction = undefined;
     metadata.isSubmitting = false;
-    sendTextMessage(senderID, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
+    sendTextMessage(senderID, recipientid, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
 }
 
 var processIsEvent = function(senderID, recipientid, prevMessage, metadata) {
   if (!prevMessage) {
-    sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
+    sendTextMessage(senderID, recipientid, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
   var mess = prevMessage.toUpperCase();
   if (mess === 'YES') {
     metadata.nextAction = 'eventCategory';
-    sendTextMessage(senderID, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
+    sendTextMessage(senderID, recipientid, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
     return;
   } else if (mess === 'NO') {
     metadata.nextAction = 'subject';
-    sendTextMessage(senderID, 'What word best describes your video: 1) family-friendly\n 2) comedy\n 3) None of the above', metadata);
+    sendTextMessage(senderID, recipientid, 'What word best describes your video: 1) family-friendly\n 2) comedy\n 3) None of the above', metadata);
     return;
   } else {
-    sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
+    sendTextMessage(senderID, recipientid, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
     return;
   }
 }
@@ -112,29 +112,29 @@ var processIsEvent = function(senderID, recipientid, prevMessage, metadata) {
 var processEventCategory = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
-    sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
+    sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
   }
   var events = ['Father’s Day', 'Afropunk', 'House Party']
   metadata.tag = (num === events.length + 1) ? 'Other' : events[num];
   metadata.nextAction = 'addr1';
-  sendTextMessage(senderID, 'What is your address?', metadata);
+  sendTextMessage(senderID, recipientid, 'What is your address?', metadata);
 }
 
 var processSubject = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
-    sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
+    sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
   }
   var categories = ['family-friendly', 'comedy'];
   metadata.tag = (num === categories.length + 1) ? 'Other' : events[num];
   metadata.nextAction = 'addr1';
-  sendTextMessage(senderID, 'What is your address?', metadata);
+  sendTextMessage(senderID, recipientid, 'What is your address?', metadata);
 }
 
 var processAddr1 = function(senderID, recipientid, prevMessage, metadata) {
   metadata.addr1 = prevMessage;
   metadata.nextAction = 'addr2';
-  sendTextMessage(senderID, 'What is the second part of your address (if applicable, or None if none)?', metadata);
+  sendTextMessage(senderID, recipientid, 'What is the second part of your address (if applicable, or None if none)?', metadata);
 }
 
 var processAddr2 = function(senderID, recipientid, prevMessage, metadata) {
