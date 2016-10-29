@@ -71,7 +71,7 @@ app.post('/send_email_confirmation', function(req, res) {
 
 // messenger webhook
 app.get('/messenger_webhook', function(req, res) {
-  var VALIDATION_TOKEN = 09384759347934;
+  var VALIDATION_TOKEN = '09384759347934';
   if (req.query['hub.mode'] === 'subscribe' &&
       req.query['hub.verify_token'] === VALIDATION_TOKEN) {
     console.log("Validating webhook");
