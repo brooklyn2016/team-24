@@ -19,7 +19,7 @@ import com.team24_jpm.bric.helpers.Topic;
  */
 public class TopicFragment extends Fragment {
 
-    private Topic category;
+    private int category;
     private RecyclerView recycler;
 
     public TopicFragment(){}
@@ -27,11 +27,16 @@ public class TopicFragment extends Fragment {
     public static TopicFragment newInstance(Topic category) {
 
         Bundle args = new Bundle();
-
+        args.putInt("topic", category.ordinal());
         TopicFragment fragment = new TopicFragment();
         fragment.setArguments(args);
-        fragment.category = category;
         return fragment;
+    }
+
+    @Override
+    public void setArguments(Bundle args) {
+        super.setArguments(args);
+        category = args.getInt("topic");
     }
 
     @Override
@@ -47,18 +52,8 @@ public class TopicFragment extends Fragment {
         recycler = (RecyclerView) mainView.findViewById(R.id.fragment_recycler);
         recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        int categoryIndex;
-        // Pass array index to adapter in order to pull correct array of titles
-        if (category == Topic.CATEGORIES) {
-            categoryIndex = 0;
-        } else if (category == Topic.LOCATIONS) {
-            categoryIndex = 1;
-        } else {
-            categoryIndex = 2;
-        }
-
         // Set up RecyclerView Adapter
-        recycler.setAdapter(new TopicAdapter(categoryIndex));
+        recycler.setAdapter(new TopicAdapter(category));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recycler.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 

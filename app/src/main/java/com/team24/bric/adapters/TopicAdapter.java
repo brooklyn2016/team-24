@@ -18,15 +18,15 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
     // Index 0 is categories, index 1 is locations, index 2 is event series
     private final String[][] CATEGORIES = {{"Comedy", "Family Friendly", "Theater", "Films",
                                             "Dance", "Free", "Music", "Arts"},
-                                            {"BRIC Arts | Media House", "BRIC House",
-                                            "Brooklyn Bridge Park",
-                                                    "Brooklyn Public Library: Brooklyn Heights",
-                                                    "Prospect Park Bandshell",
-                                            "Weeksville Heritage Center"},
                                             {"B Scene", "B-Side", "BRIC FamJam", "BRIC FLIX",
                                             "BRIC JazzFest", "BRIClab Residencies",
                                             "Dance at BRIC House", "Media Talks",
-                                            "Fireworks Residency", "In Concert"}};
+                                            "Fireworks Residency", "In Concert"},
+                                            {"BRIC Arts | Media House", "BRIC House",
+                                            "Brooklyn Bridge Park",
+                                            "Brooklyn Public Library: Brooklyn Heights",
+                                            "Prospect Park Bandshell",
+                                            "Weeksville Heritage Center"}};
     private final int[] IMAGES = {R.drawable.comedy, R.drawable.children, R.drawable.theater,
                                     R.drawable.old_camera, R.drawable.dancing, R.drawable.free,
                                     R.drawable.music, R.drawable.art};

@@ -3,8 +3,7 @@ package com.team24_jpm.bric.helpers;
 /**
  * Created by harrisonmelton on 10/29/16.
  */
-public enum Topic {
-    CATEGORIES,
-    EVENT_SERIES,
-    LOCATIONS
+public class Storage {
+
+
 }
