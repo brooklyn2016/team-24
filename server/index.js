@@ -143,20 +143,25 @@ var sendTextMessage = function(senderID, message, metadata) {
   var stringedMeta = JSON.stringify(metadata);
   var messageData = {
     recipient: {
-      id: recipientID
+      id: senderID
     },
     message: {
       text: message,
       metadata: metadata
     }
-  }
+  };
+  request({url: 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAI4Xci81OMBALbhSdEjs62qeQFTmtqR59KgXuVZASq4L2SSnEaLHZAsXmqACxPKCihZA9DAbZA21wc0dM5GXSIw9d7SEEbaNoXtZBcxcoYunCHogvZAZAEn56SAuiAr5dyZBdwib7AKTjalKX8pnd3NNipqiRfSr6Adg5moaH8pMwZDZD',
+    method: 'POST',
+    json: messageData
+  })
 }
 
 var onReceivedMessage = function(e) {
-  var senderID = e.sender.id,
-    recipientID = e.recipient.id,
-    message = e.message;
-  var meta = JSON.parse(message.metadata) || {};
+  console.log(e);
+  var senderID = e.sender.id;
+  var recipientID = e.recipient.id;
+  var message = e.message;
+  var meta = (message.metadata) ? JSON.parse(message.metadata) : {};
   if (message.attachments) {
     if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
       meta.isSubmitting = false;
