@@ -89,13 +89,15 @@ var processError = function(senderID, prevMessage, metadata) {
 }
 
 var processIsEvent = function(senderID, prevMessage, metadata) {
-  var mess = message.toUpperCase();
+  var mess = prevMessage.toUpperCase();
   if (mess === 'YES') {
     metadata.nextAction = 'eventCategory';
     sendTextMessage(senderID, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
-  } else {
+  } else if (mess === 'NO') {
     metadata.nextAction = 'subject';
     sendTextMessage(senderID, 'What word best describes your video: 1) family-friendly\n 2) comedy\n 3) None of the above', metadata);
+  } else {
+    sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
 }
 
