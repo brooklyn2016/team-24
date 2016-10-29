@@ -180,7 +180,7 @@ var onReceivedMessage = function(e) {
       meta.isSubmitting = true;
       meta.nextAction = 'isEvent'
       sendTextMessage(senderID, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
-        'Is your video about a current event?\n', meta, [Yes, No]);
+        'Is your video about a current event?\n', meta, ['Yes', 'No']);
     }
   } else if (message.text) {
     if (!meta.isSubmitting) {
