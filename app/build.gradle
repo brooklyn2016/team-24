@@ -18,6 +18,9 @@ android {
         }
     }
 }
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -30,6 +33,7 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:design:+'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
 
 apply plugin: 'com.google.gms.google-services'
