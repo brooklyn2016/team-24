@@ -126,7 +126,7 @@ var processSubject = function(senderID, recipientid, prevMessage, metadata) {
     sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
   }
   var categories = ['family-friendly', 'comedy'];
-  metadata.tag = (num === categories.length + 1) ? 'Other' : events[num];
+  metadata.tag = (num === categories.length + 1) ? 'Other' : categories[num];
   metadata.nextAction = 'addr1';
   sendTextMessage(senderID, recipientid, 'What is your address?', metadata);
 }
