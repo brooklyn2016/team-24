@@ -175,6 +175,7 @@ var onReceivedMessage = function(e) {
   var senderID = e.sender.id;
   var message = e.message;
   var meta = (message.metadata) ? JSON.parse(message.metadata) : metas[e.recipient.id] || {};
+  console.log(meta);
   if (message.attachments) {
     if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
       meta.isSubmitting = false;
