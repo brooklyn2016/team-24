@@ -89,6 +89,7 @@ var processError = function(senderID, prevMessage, metadata) {
 }
 
 var processIsEvent = function(senderID, prevMessage, metadata) {
+  console.log(prevMessage);
   if (!prevMessage) {
     sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
