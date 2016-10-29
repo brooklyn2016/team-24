@@ -87,6 +87,7 @@ app.get('/messenger_webhook', function(req, res) {
 var processError = function(senderID, recipientid, prevMessage, metadata) {
     metadata.nextAction = undefined;
     metadata.isSubmitting = false;
+    metas[recipientid] = {};
     sendTextMessage(senderID, recipientid, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
 }
 
@@ -136,7 +137,7 @@ var processSubject = function(senderID, recipientid, prevMessage, metadata) {
 var processAddr1 = function(senderID, recipientid, prevMessage, metadata) {
   metadata.addr1 = prevMessage;
   metadata.nextAction = 'phone';
-  sendTextMessage(senderID, recipientid, 'What is the second part of your address (if applicable, or None if none)?', metadata);
+  sendTextMessage(senderID, recipientid, 'What is your phone number?', metadata);
 }
 
 var processPhone = function(senderID, recipientid, prevMessage, metadata) {
@@ -179,6 +180,7 @@ var onReceivedMessage = function(e) {
       meta.isSubmitting = false;
       sendTextMessage(senderID, e.recipient.id, 'Invalid file type', meta);
     } else {
+      metas[recipientid] = {};
       meta.isSubmitting = true;
       meta.nextAction = 'isEvent'
       sendTextMessage(senderID, e.recipient.id, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
@@ -206,6 +208,7 @@ var onReceivedMessage = function(e) {
         break;
       case 'phone':
         processFunction = processPhone;
+        break;
       default:
         processFunction = processError;
         break;
