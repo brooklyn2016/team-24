@@ -174,7 +174,7 @@ var onReceivedMessage = function(e) {
     }
   } else if (message.text) {
     if (!meta.isSubmitting) {
-      processError(senderID, message, metadata);
+      processError(senderID, message, meta);
       return;
     }
     var processFunction;
