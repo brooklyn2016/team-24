@@ -64,7 +64,7 @@ public class UploadActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl("gs://bric-dd7cd.appspot.com");
-        Uri file = Uri.fromFile(new File(s));
+        Uri file = Uri.fromFile(new File("Users/Robbie/hey.txt"));
         //StorageReference fRef = storageRef.child(file.getLastPathSegment());
         UploadTask uploadTask = storageRef.putFile(file);
         uploadTask.addOnFailureListener(new OnFailureListener() {
