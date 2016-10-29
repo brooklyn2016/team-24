@@ -89,7 +89,6 @@ var processError = function(senderID, prevMessage, metadata) {
 }
 
 var processIsEvent = function(senderID, prevMessage, metadata) {
-  console.log(prevMessage);
   if (!prevMessage) {
     sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
@@ -97,11 +96,14 @@ var processIsEvent = function(senderID, prevMessage, metadata) {
   if (mess === 'YES') {
     metadata.nextAction = 'eventCategory';
     sendTextMessage(senderID, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
+    return;
   } else if (mess === 'NO') {
     metadata.nextAction = 'subject';
     sendTextMessage(senderID, 'What word best describes your video: 1) family-friendly\n 2) comedy\n 3) None of the above', metadata);
+    return;
   } else {
     sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
+    return;
   }
 }
 
@@ -156,7 +158,6 @@ var sendTextMessage = function(senderID, message, metadata) {
       metadata: stringedMeta
     }
   };
-  console.log(messageData)
   request({url: 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAI4Xci81OMBAIsdjgPov4fvq1tBk1uM8x2Puz9Vnnh7ZCfz0Ej1hVP0lTN2Gnzz59MBIRv6t8IDdVZB1WZBedVwJRyWg0hXMZCO1ZAxRjU7VNw71vMKnhxOP6Lvm95DND92NufegPYykCDYZAt58qvYIDuI24eEqJ4LuVLGQMTAZDZD',
     method: 'POST',
     json: messageData
@@ -167,7 +168,6 @@ var onReceivedMessage = function(e) {
   var senderID = e.sender.id;
   var message = e.message;
   console.log(e);
-  console.log(message);
   var meta = (message.metadata) ? JSON.parse(message.metadata) : {};
   if (message.attachments) {
     if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
