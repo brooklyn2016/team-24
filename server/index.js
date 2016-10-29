@@ -154,14 +154,14 @@ var sendTextMessage = function(senderID, message, metadata) {
   request({url: 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAI4Xci81OMBAIsdjgPov4fvq1tBk1uM8x2Puz9Vnnh7ZCfz0Ej1hVP0lTN2Gnzz59MBIRv6t8IDdVZB1WZBedVwJRyWg0hXMZCO1ZAxRjU7VNw71vMKnhxOP6Lvm95DND92NufegPYykCDYZAt58qvYIDuI24eEqJ4LuVLGQMTAZDZD',
     method: 'POST',
     json: messageData
-  }, function(err) {
+  }, function(err, res) {
     console.log(err);
+    console.log(res);
   });
 }
 
 var onReceivedMessage = function(e) {
   var senderID = e.sender.id;
-  var recipientID = e.recipient.id;
   var message = e.message;
   var meta = (message.metadata) ? JSON.parse(message.metadata) : {};
   if (message.attachments) {
