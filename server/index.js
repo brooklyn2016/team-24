@@ -171,6 +171,7 @@ var sendTextMessage = function(senderID, recipientid, message, metadata, quickRe
 }
 
 var onReceivedMessage = function(e) {
+  console.log(e);
   var senderID = e.sender.id;
   var message = e.message;
   var meta = (message.metadata) ? JSON.parse(message.metadata) : metas[e.recipient.id] || {};
@@ -183,6 +184,7 @@ var onReceivedMessage = function(e) {
       meta.nextAction = 'isEvent'
       sendTextMessage(senderID, e.recipient.id, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
         'Is your video about a current event?\n', meta);
+      return;
     }
   } else if (message.text) {
     if (!meta.isSubmitting) {
