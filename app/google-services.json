@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "652785858806",
+    "firebase_url": "https://bric-dd7cd.firebaseio.com",
+    "project_id": "bric-dd7cd",
+    "storage_bucket": "bric-dd7cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652785858806:android:6bb2bcc6014ec511",
+        "android_client_info": {
+          "package_name": "com.team24_jpm.bric"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652785858806-kmeiojdob6gmplt1p3gnnvr5gsamlrou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team24_jpm.bric",
+            "certificate_hash": "16E952A8C5BF4DC81414254C00383330E797FB27"
+          }
+        },
+        {
+          "client_id": "652785858806-5uiuvf65o8nnm0993rqsppmfs8ogvvgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCjUdavwMGTgH0fi4jQ7CIAw8kOb5IuHY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652785858806-5uiuvf65o8nnm0993rqsppmfs8ogvvgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
