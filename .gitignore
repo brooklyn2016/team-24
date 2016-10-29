@@ -6,3 +6,5 @@
 .DS_Store
 /build
 /captures
+brooklyn_team_24.pem
+*/node_modules/*

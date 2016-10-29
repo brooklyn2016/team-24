@@ -1,0 +1,16 @@
+{
+  "name": "code-for-good-email",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "firebase": "^3.5.2"
+  },
+  "devDependencies": {}
+}
