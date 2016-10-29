@@ -166,6 +166,8 @@ var sendTextMessage = function(senderID, message, metadata) {
 var onReceivedMessage = function(e) {
   var senderID = e.sender.id;
   var message = e.message;
+  console.log(e);
+  console.log(message);
   var meta = (message.metadata) ? JSON.parse(message.metadata) : {};
   if (message.attachments) {
     if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
@@ -178,7 +180,6 @@ var onReceivedMessage = function(e) {
         'Is your video about a current event?\n', meta);
     }
   } else if (message.text) {
-    console.log(message);
     if (!meta.isSubmitting) {
       processError(senderID, message, meta);
       return;
