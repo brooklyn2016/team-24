@@ -1,14 +1,18 @@
 package com.team24_jpm.bric.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+
+import com.team24_jpm.bric.R;
+import com.team24_jpm.bric.views.SquareImageView;
 
 /**
  * Created by harrisonmelton on 10/28/16.
  * Adapter file for GridView on main page.
  */
-public class TagAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> {
 
     // Index 0 is categories, index 1 is locations, index 2 is event series
     private final String[][] CATEGORIES = {{"Comedy", "Family Friendly", "Theater", "Films",
@@ -23,25 +27,43 @@ public class TagAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                             "Dance at BRIC House", "Media Talks",
                                             "Fireworks Residency", "In Concert"}};
     private int categorySection;
-    private Context context;
 
-    public TagAdapter(Context context) {
-        this.context = context;
+    public TopicAdapter() {
         categorySection = 0;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public TopicAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder viewHolder;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_view_layout,
+                parent, false);
+
+        viewHolder = new ViewHolder(v);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(TopicAdapter.ViewHolder holder, int position) {
 
     }
 
     @Override
     public int getItemCount() {
         return CATEGORIES[categorySection].length;
+    }
+
+    /**
+     * ViewHolder class for each cell in RecyclerView
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public View parentView;
+        public SquareImageView imageView;
+
+        public ViewHolder(View v) {
+            super(v);
+            parentView = v;
+            imageView = (SquareImageView) v.findViewById(R.id.topic_image);
+        }
     }
 }

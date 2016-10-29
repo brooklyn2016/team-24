@@ -2,11 +2,14 @@ package com.team24_jpm.bric.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.team24_jpm.bric.R;
+import com.team24_jpm.bric.adapters.TopicAdapter;
 import com.team24_jpm.bric.helpers.Topic;
 
 /**
@@ -16,6 +19,7 @@ import com.team24_jpm.bric.helpers.Topic;
 public class TopicFragment extends Fragment {
 
     private Topic category;
+    private RecyclerView recycler;
 
     public TopicFragment(){}
 
@@ -36,6 +40,13 @@ public class TopicFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_topics, container, false);
+        View mainView = inflater.inflate(R.layout.fragment_topics, container, false);
+
+        // Set RecyclerView to use 2 columns
+        recycler = (RecyclerView) mainView.findViewById(R.id.fragment_recycler);
+        recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recycler.setAdapter(new TopicAdapter());
+
+        return mainView;
     }
 }
