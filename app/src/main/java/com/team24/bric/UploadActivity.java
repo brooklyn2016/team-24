@@ -54,10 +54,24 @@ public class UploadActivity extends AppCompatActivity {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl("gs://bric-dd7cd.appspot.com");
-        
+        StorageReference mountainsRef = storageRef.child("default.prop");
+        Uri file = Uri.fromFile(new File("/default.prop"));
+        StorageReference riversRef = storageRef.child("default.prop");
+        UploadTask uploadTask = riversRef.putFile(file);
+        uploadTask = storageRef.child("default.prop").putFile(file);
 
-
-
-
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+            }
+        });
     }
 }
