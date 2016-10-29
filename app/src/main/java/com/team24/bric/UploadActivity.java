@@ -72,6 +72,7 @@ public class UploadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 doneCover.setVisibility(View.GONE);
                 title.setText("Submit Video");
+                startActivity(new Intent(UploadActivity.this, MainActivity.class));
             }
         });
 
