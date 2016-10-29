@@ -173,6 +173,7 @@ var sendTextMessage = function(senderID, recipientid, message, metadata, quickRe
 var onReceivedMessage = function(e) {
   console.log(e);
   var senderID = e.sender.id;
+  var recipientid = e.recipient.id;
   var message = e.message;
   var meta = (message.metadata) ? JSON.parse(message.metadata) : metas[e.recipient.id] || {};
   console.log(meta);
