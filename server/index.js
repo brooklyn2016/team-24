@@ -143,7 +143,7 @@ var processPhone = function(senderID, recipientid, prevMessage, metadata) {
   metadata.phone = prevMessage;
   metadata.isSubmitting = false;
   metadata.nextAction = undefined;
-  sendTextMessage(senderID, recipientid, prevMessage, metadata);
+  sendTextMessage(senderID, recipientid, 'Thank you! We will tell you when we know when your video will be aired.', metadata);
 }
 
 var sendTextMessage = function(senderID, recipientid, message, metadata, quickReplies) {
@@ -203,9 +203,6 @@ var onReceivedMessage = function(e) {
         break;
       case 'addr1':
         processFunction = processAddr1;
-        break;
-      case 'addr2':
-        processFunction = processAddr2;
         break;
       case 'phone':
         processFunction = processPhone;
