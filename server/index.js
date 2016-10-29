@@ -85,7 +85,7 @@ app.get('/messenger_webhook', function(req, res) {
 var processError = function(senderID, prevMessage, metadata) {
     metadata.nextAction = undefined;
     metadata.isSubmitting = false;
-    sendTextMessage(senderID, 'Why are you even here? Scram.', metadata);
+    sendTextMessage(senderID, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
 }
 
 var processIsEvent = function(senderID, prevMessage, metadata) {
@@ -199,7 +199,7 @@ var onReceivedMessage = function(e) {
         processFunction = processError;
         break;
     }
-    processFunction(senderID, message, metadata);
+    processFunction(senderID, message, meta);
   }
 }
 
