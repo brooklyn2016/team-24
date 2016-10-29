@@ -82,8 +82,106 @@ app.get('/messenger_webhook', function(req, res) {
   }
 });
 
+var processError = function(senderID, prevMessage, metadata) {
+    metadata.nextAction = undefined;
+    metadata.isSubmitting = false;
+    sendTextMessage(senderID, 'Why are you even here? Scram.', metadata);
+}
+
+var processIsEvent = function(senderID, prevMessage, metadata) {
+  var mess = message.toUpperCase();
+  if (mess === 'YES') {
+    metadata.nextAction = 'eventCategory';
+    sendTextMessage(senderID, 'What event does your video depict: 1) Father’s Day\n 2) Afropunk\n 3) House Party\n or 4) None of the above ', metadata);
+  } else {
+    metadata.nextAction = 'subject';
+    sendTextMessage(senderID, 'What word best describes your video: 1) family-friendly\n 2) comedy\n 3) None of the above', metadata);
+  }
+}
+
+var processEventCategory = function(senderID, prevMessage, metadata) {
+  var num = parseInt(prevMessage);
+  if (isNaN(num) || !num || num > events.length + 1) {
+    sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
+  }
+  var events = ['Father’s Day', 'Afropunk', 'House Party']
+  metadata.tag = (num === events.length + 1) ? 'Other' : events[num];
+  metadata.nextAction = 'addr1';
+  sendTextMessage(senderID, 'What is your address?', metadata);
+}
+
+var processSubject = function(senderID, prevMessage, metadata) {
+  var num = parseInt(prevMessage);
+  if (isNaN(num) || !num || num > events.length + 1) {
+    sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
+  }
+  var categories = ['family-friendly', 'comedy'];
+  metadata.tag = (num === categories.length + 1) ? 'Other' : events[num];
+  metadata.nextAction = 'addr1';
+  sendTextMessage(senderID, 'What is your address?', metadata);
+}
+
+var processError = function(senderID, prevMessage, metadata) {
+
+}
+
+var processError = function(senderID, prevMessage, metadata) {
+
+}
+
+var processError = function(senderID, prevMessage, metadata) {
+
+}
+
+var sendTextMessage = function(senderID, message, metadata) {
+
+}
+
 var onReceivedMessage = function(e) {
-  // Chatbot goes here
+  var senderID = e.sender.id,
+    recipientID = e.recipient.id,
+    message = e.message;
+  var meta = JSON.parse(message.metadata) || {};
+  if (message.attachments) {
+    if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
+      meta.isSubmitting = false;
+      sendTextMessage(senderID, 'Invalid file type', meta);
+    } else {
+      meta.isSubmitting = true;
+      meta.nextAction = 'isEvent'
+      sendTextMessage(senderID, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
+        'Is your video about a current event?\n', meta);
+    }
+  } else if (message.text) {
+    if (!meta.isSubmitting) {
+      processError(senderID, message, metadata);
+      return;
+    }
+    var processFunction;
+    switch (meta.nextAction) {
+      case 'isEvent':
+        processFunction = processIsEvent;
+        break;
+      case 'eventCategory':
+        processFunction = processEventCategory;
+        break;
+      case 'subject':
+        processFunction = processSubject;
+        break;
+      case 'addr1':
+        processFunction = processAddr1;
+        break;
+      case 'addr2':
+        processFunction = processAddr2;
+        break;
+      case 'phone':
+        processFunction = processPhone;
+      default:
+        processFunction = processError;
+        break;
+    }
+    processFunction(senderID, message, metadata);
+  }
 }
 
 app.post('/messenger_webhook', function(req, res){
