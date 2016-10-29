@@ -84,13 +84,13 @@ app.get('/messenger_webhook', function(req, res) {
   }
 });
 
-var processError = function(senderid, recipientid, prevMessage, metadata) {
+var processError = function(senderID, recipientid, prevMessage, metadata) {
     metadata.nextAction = undefined;
     metadata.isSubmitting = false;
     sendTextMessage(senderID, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
 }
 
-var processIsEvent = function(senderid, recipientid, prevMessage, metadata) {
+var processIsEvent = function(senderID, recipientid, prevMessage, metadata) {
   if (!prevMessage) {
     sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
@@ -109,7 +109,7 @@ var processIsEvent = function(senderid, recipientid, prevMessage, metadata) {
   }
 }
 
-var processEventCategory = function(senderid, recipientid, prevMessage, metadata) {
+var processEventCategory = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
@@ -120,7 +120,7 @@ var processEventCategory = function(senderid, recipientid, prevMessage, metadata
   sendTextMessage(senderID, 'What is your address?', metadata);
 }
 
-var processSubject = function(senderid, recipientid, prevMessage, metadata) {
+var processSubject = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
@@ -131,25 +131,25 @@ var processSubject = function(senderid, recipientid, prevMessage, metadata) {
   sendTextMessage(senderID, 'What is your address?', metadata);
 }
 
-var processAddr1 = function(senderid, recipientid, prevMessage, metadata) {
+var processAddr1 = function(senderID, recipientid, prevMessage, metadata) {
   metadata.addr1 = prevMessage;
   metadata.nextAction = 'addr2';
   sendTextMessage(senderID, 'What is the second part of your address (if applicable, or None if none)?', metadata);
 }
 
-var processAddr2 = function(senderid, recipientid, prevMessage, metadata) {
+var processAddr2 = function(senderID, recipientid, prevMessage, metadata) {
   metadata.addr2 = (prevMessage.toUpperCase === 'NONE') ? '' : prevMessage;
   metadata.nextAction = 'What is your phone number?';
 }
 
-var processPhone = function(senderid, recipientid, prevMessage, metadata) {
+var processPhone = function(senderID, recipientid, prevMessage, metadata) {
   metadata.phone = prevMessage;
   metadata.isSubmitting = false;
   metadata.nextAction = undefined;
-  sendTextMessage(senderid, recipientid, prevMessage, metadata);
+  sendTextMessage(senderID, recipientid, prevMessage, metadata);
 }
 
-var sendTextMessage = function(senderid, recipientid, message, metadata, quickReplies) {
+var sendTextMessage = function(senderID, recipientid, message, metadata, quickReplies) {
   metas[recipientid] = metadata;
   var stringedMeta = JSON.stringify(metadata);
   var messageData = {
