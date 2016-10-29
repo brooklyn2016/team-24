@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,29 +50,38 @@ public class UploadActivity extends AppCompatActivity {
 
 
     }
+    /*
+    private void addtoFireBase(String s) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://bric-dd7cd.appspot.com");
+        Uri file = Uri.fromFile(new File(s));
+        UploadTask uploadTask = storageRef.putFile(file);
+    }
+    */
 
     private void addtoFireBase(String s) {
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl("gs://bric-dd7cd.appspot.com");
-        StorageReference mountainsRef = storageRef.child("default.prop");
-        Uri file = Uri.fromFile(new File("/default.prop"));
-        StorageReference riversRef = storageRef.child("default.prop");
-        UploadTask uploadTask = riversRef.putFile(file);
-        uploadTask = storageRef.child("default.prop").putFile(file);
-
-// Register observers to listen for when the download is done or if it fails
+        Uri file = Uri.fromFile(new File(s));
+        //StorageReference fRef = storageRef.child(file.getLastPathSegment());
+        UploadTask uploadTask = storageRef.putFile(file);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                Log.e("Firebase", "Failed");
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Log.e("Firebase", "Success");
+                //Uri downloadUrl = taskSnapshot.getDownloadUrl();
             }
         });
+
+// Register observers to listen for when the download is done or if it fails
     }
 }
