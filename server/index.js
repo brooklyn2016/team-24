@@ -31,6 +31,9 @@ var sendConfirmationEmail = function(submission) {
 var onNewComplete = function(snapshot) {
   var val = snapshot.val();
   var key = snapshot.key;
+  if (val.status !== 'scheduled') {
+    return;
+  }
   sendConfirmationEmail(val);
   if (val.email && val.emailConfirmationSent) {
     db.ref('submissions/' + key + '/emailConfirmationSent').set(true);
