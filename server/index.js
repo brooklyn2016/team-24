@@ -147,7 +147,7 @@ var processPhone = function(senderID, prevMessage, metadata) {
   sendTextMessage(senderID, message, metadata);
 }
 
-var sendTextMessage = function(senderID, message, metadata, quickReplies = []) {
+var sendTextMessage = function(senderID, message, metadata, quickReplies) {
   var stringedMeta = JSON.stringify(metadata);
   var messageData = {
     recipient: {
