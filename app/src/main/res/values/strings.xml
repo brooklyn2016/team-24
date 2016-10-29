@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BRIC</string>
+
+
+        <string name="edit_message">something text </string>
+        <string name="upload_button">Upload File</string>
+
 </resources>
