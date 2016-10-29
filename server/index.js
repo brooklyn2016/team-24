@@ -113,6 +113,7 @@ var processEventCategory = function(senderID, recipientid, prevMessage, metadata
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
+    return;
   }
   var events = ['Father’s Day', 'Afropunk', 'House Party']
   metadata.tag = (num === events.length + 1) ? 'Other' : events[num];
@@ -124,6 +125,7 @@ var processSubject = function(senderID, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, recipientid, 'You entered an invalid value. Try again', metadata);
+    return;
   }
   var categories = ['family-friendly', 'comedy'];
   metadata.tag = (num === categories.length + 1) ? 'Other' : categories[num];
@@ -133,13 +135,8 @@ var processSubject = function(senderID, recipientid, prevMessage, metadata) {
 
 var processAddr1 = function(senderID, recipientid, prevMessage, metadata) {
   metadata.addr1 = prevMessage;
-  metadata.nextAction = 'addr2';
+  metadata.nextAction = 'phone';
   sendTextMessage(senderID, recipientid, 'What is the second part of your address (if applicable, or None if none)?', metadata);
-}
-
-var processAddr2 = function(senderID, recipientid, prevMessage, metadata) {
-  metadata.addr2 = (prevMessage.toUpperCase === 'NONE') ? '' : prevMessage;
-  metadata.nextAction = 'What is your phone number?';
 }
 
 var processPhone = function(senderID, recipientid, prevMessage, metadata) {
