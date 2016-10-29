@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 var https = require('https');
 var fs = require('fs');
 
+var metas = {}
+
 // Initialize Firebase
 firebase.initializeApp({
   serviceAccount: './lib/BRIC-74413bf89aef.json',
@@ -82,13 +84,13 @@ app.get('/messenger_webhook', function(req, res) {
   }
 });
 
-var processError = function(senderID, prevMessage, metadata) {
+var processError = function(senderid, recipientid, prevMessage, metadata) {
     metadata.nextAction = undefined;
     metadata.isSubmitting = false;
     sendTextMessage(senderID, 'Hi! Send me a video for a chance to be on BRIC TV.', metadata);
 }
 
-var processIsEvent = function(senderID, prevMessage, metadata) {
+var processIsEvent = function(senderid, recipientid, prevMessage, metadata) {
   if (!prevMessage) {
     sendTextMessage(senderID, 'Can you repeat that? You can only tell me yes and no right now.', metadata);
   }
@@ -107,7 +109,7 @@ var processIsEvent = function(senderID, prevMessage, metadata) {
   }
 }
 
-var processEventCategory = function(senderID, prevMessage, metadata) {
+var processEventCategory = function(senderid, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
@@ -118,7 +120,7 @@ var processEventCategory = function(senderID, prevMessage, metadata) {
   sendTextMessage(senderID, 'What is your address?', metadata);
 }
 
-var processSubject = function(senderID, prevMessage, metadata) {
+var processSubject = function(senderid, recipientid, prevMessage, metadata) {
   var num = parseInt(prevMessage);
   if (isNaN(num) || !num || num > events.length + 1) {
     sendTextMessage(senderID, 'You entered an invalid value. Try again', metadata);
@@ -129,25 +131,26 @@ var processSubject = function(senderID, prevMessage, metadata) {
   sendTextMessage(senderID, 'What is your address?', metadata);
 }
 
-var processAddr1 = function(senderID, prevMessage, metadata) {
+var processAddr1 = function(senderid, recipientid, prevMessage, metadata) {
   metadata.addr1 = prevMessage;
   metadata.nextAction = 'addr2';
   sendTextMessage(senderID, 'What is the second part of your address (if applicable, or None if none)?', metadata);
 }
 
-var processAddr2 = function(senderID, prevMessage, metadata) {
+var processAddr2 = function(senderid, recipientid, prevMessage, metadata) {
   metadata.addr2 = (prevMessage.toUpperCase === 'NONE') ? '' : prevMessage;
   metadata.nextAction = 'What is your phone number?';
 }
 
-var processPhone = function(senderID, prevMessage, metadata) {
+var processPhone = function(senderid, recipientid, prevMessage, metadata) {
   metadata.phone = prevMessage;
   metadata.isSubmitting = false;
   metadata.nextAction = undefined;
-  sendTextMessage(senderID, message, metadata);
+  sendTextMessage(senderid, recipientid, prevMessage, metadata);
 }
 
-var sendTextMessage = function(senderID, message, metadata, quickReplies) {
+var sendTextMessage = function(senderid, recipientid, message, metadata, quickReplies) {
+  metas[recipientid] = metadata;
   var stringedMeta = JSON.stringify(metadata);
   var messageData = {
     recipient: {
@@ -170,17 +173,16 @@ var sendTextMessage = function(senderID, message, metadata, quickReplies) {
 var onReceivedMessage = function(e) {
   var senderID = e.sender.id;
   var message = e.message;
-  console.log(e);
-  var meta = (message.metadata) ? JSON.parse(message.metadata) : {};
+  var meta = (message.metadata) ? JSON.parse(message.metadata) : metas[e.recipient.id] || {};
   if (message.attachments) {
     if (message.attachments.length !== 1 || message.attachments[0].type !== 'video') {
       meta.isSubmitting = false;
-      sendTextMessage(senderID, 'Invalid file type', meta);
+      sendTextMessage(senderID, e.recipient.id, 'Invalid file type', meta);
     } else {
       meta.isSubmitting = true;
       meta.nextAction = 'isEvent'
-      sendTextMessage(senderID, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
-        'Is your video about a current event?\n', meta, ['Yes', 'No']);
+      sendTextMessage(senderID, e.recipient.id, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
+        'Is your video about a current event?\n', meta);
     }
   } else if (message.text) {
     if (!meta.isSubmitting) {
@@ -210,7 +212,7 @@ var onReceivedMessage = function(e) {
         processFunction = processError;
         break;
     }
-    processFunction(senderID, message.text, meta);
+    processFunction(senderID, e.recipient.id, message.text, meta);
   }
 }
 
