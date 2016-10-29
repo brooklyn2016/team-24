@@ -1,5 +1,6 @@
 package com.team24_jpm.bric.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.team24_jpm.bric.R;
+import com.team24_jpm.bric.UploadActivity;
 import com.team24_jpm.bric.views.SquareImageView;
 
 /**
@@ -38,11 +40,22 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public TopicAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder viewHolder;
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_view_layout,
+        final ViewHolder viewHolder;
+        final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_view_layout,
                 parent, false);
 
         viewHolder = new ViewHolder(v);
+
+        // Send user to upload video screen
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(v.getContext(), UploadActivity.class);
+                // Send the topic as an intent extra
+                intent.putExtra("topic", viewHolder.title.getText().toString());
+                v.getContext().startActivity(intent);
+            }
+        });
         return viewHolder;
     }
 

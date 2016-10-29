@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.CallbackManager;
@@ -42,24 +43,29 @@ public class SplashscreenActivity extends AppCompatActivity {
                             public void onCompleted(
                                     JSONObject object,
                                     GraphResponse response) {
-                                try {
-                                    // Log user in
-                                    String name = object.getString("name");
-                                    String email = object.getString("email");
-                                    Storage.logIn(name, email);
+                                if (response != null) {
+                                    try {
+                                        // Log user in
+                                        String name = object.getString("name");
+                                        Log.e("Splashscreen", name);
+                                        String id = object.getString("id");
+                                        Log.e("Splashscreen", id);
+                                        Storage.logIn(name, id);
 
-                                    // Go to main page
-                                    Intent intent = new Intent(SplashscreenActivity.this,
-                                            MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                        // Go to main page
+                                        Intent intent = new Intent(SplashscreenActivity.this,
+                                                MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } catch (JSONException e) {
+                                        Log.e("Splashscreen", e.getMessage());
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email");
+                parameters.putString("fields", "id,name");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -82,6 +88,9 @@ public class SplashscreenActivity extends AppCompatActivity {
             ObjectAnimator fadeIn = ObjectAnimator.ofFloat(loginButton, View.ALPHA, .1f, 1f);
             fadeIn.setDuration(2000);
             fadeIn.start();
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
 
     }

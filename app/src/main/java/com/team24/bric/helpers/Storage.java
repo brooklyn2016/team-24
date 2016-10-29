@@ -20,7 +20,7 @@ public class Storage {
     KEYS
      */
     private static final String USER_NAME_KEY = "user_name";
-    private static final String USER_EMAIL_KEY = "user_email";
+    private static final String USER_ID_KEY = "user_email";
 
     /**
      * Check if user is currently logged in.
@@ -33,17 +33,21 @@ public class Storage {
     /**
      * Logs user in with user name and email provided
      * @param name user's name
-     * @param email  user's email
+     * @param id  user's facebook ID
      */
-    public static void logIn(String name, String email) {
+    public static void logIn(String name, String id) {
         EDITOR.putString(USER_NAME_KEY, name);
-        EDITOR.putString(USER_EMAIL_KEY, email);
+        EDITOR.putString(USER_ID_KEY, id);
         EDITOR.commit();
     }
 
     public static void logOut() {
         EDITOR.putString(USER_NAME_KEY, null);
-        EDITOR.putString(USER_EMAIL_KEY, null);
+        EDITOR.putString(USER_ID_KEY, null);
+        EDITOR.commit();
+    }
 
+    public static String getUserName() {
+        return PREFS.getString(USER_NAME_KEY, "User");
     }
 }
