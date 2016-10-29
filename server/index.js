@@ -147,7 +147,7 @@ var processPhone = function(senderID, prevMessage, metadata) {
   sendTextMessage(senderID, message, metadata);
 }
 
-var sendTextMessage = function(senderID, message, metadata) {
+var sendTextMessage = function(senderID, message, metadata, quickReplies = []) {
   var stringedMeta = JSON.stringify(metadata);
   var messageData = {
     recipient: {
@@ -155,9 +155,12 @@ var sendTextMessage = function(senderID, message, metadata) {
     },
     message: {
       text: message,
-      metadata: stringedMeta
+      metadata: stringedMeta,
     }
   };
+  if (quickReplies) {
+    messageData.quick_replies = quickReplies;
+  }
   request({url: 'https://graph.facebook.com/v2.6/me/messages?access_token=EAAI4Xci81OMBAIsdjgPov4fvq1tBk1uM8x2Puz9Vnnh7ZCfz0Ej1hVP0lTN2Gnzz59MBIRv6t8IDdVZB1WZBedVwJRyWg0hXMZCO1ZAxRjU7VNw71vMKnhxOP6Lvm95DND92NufegPYykCDYZAt58qvYIDuI24eEqJ4LuVLGQMTAZDZD',
     method: 'POST',
     json: messageData
@@ -177,7 +180,7 @@ var onReceivedMessage = function(e) {
       meta.isSubmitting = true;
       meta.nextAction = 'isEvent'
       sendTextMessage(senderID, 'Your submission is being processed. In the meantime can you tell me more about your app? \n' +
-        'Is your video about a current event?\n', meta);
+        'Is your video about a current event?\n', meta, [Yes, No]);
     }
   } else if (message.text) {
     if (!meta.isSubmitting) {
