@@ -87,7 +87,7 @@ public class UploadActivity extends AppCompatActivity {
             }
         });
 
-        /*Button button = (Button) findViewById(R.id.upload_button);
+        Button button = (Button) findViewById(R.id.upload_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int reqCode = 1;
@@ -97,7 +97,7 @@ public class UploadActivity extends AppCompatActivity {
             }
 
 
-        });*/
+        });
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

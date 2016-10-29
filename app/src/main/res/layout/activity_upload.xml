@@ -120,9 +120,20 @@
 
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/upload_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_below="@id/info_row"
+                android:background="@color/colorPrimaryDark"
+                android:text="upload video"
+                android:textColor="@android:color/white"
+                android:textSize="8pt"/>
+
             <LinearLayout
                 android:id="@+id/info_input_row"
-                android:layout_below="@id/info_row"
+                android:layout_below="@id/upload_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
