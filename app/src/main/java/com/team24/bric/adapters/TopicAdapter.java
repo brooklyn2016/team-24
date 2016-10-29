@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.team24_jpm.bric.R;
 import com.team24_jpm.bric.views.SquareImageView;
@@ -26,10 +27,13 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
                                             "BRIC JazzFest", "BRIClab Residencies",
                                             "Dance at BRIC House", "Media Talks",
                                             "Fireworks Residency", "In Concert"}};
+    private final int[] IMAGES = {R.drawable.comedy, R.drawable.children, R.drawable.theater,
+                                    R.drawable.old_camera, R.drawable.dancing, R.drawable.free,
+                                    R.drawable.music, R.drawable.art};
     private int categorySection;
 
-    public TopicAdapter() {
-        categorySection = 0;
+    public TopicAdapter(int category) {
+        categorySection = category;
     }
 
     @Override
@@ -44,7 +48,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(TopicAdapter.ViewHolder holder, int position) {
-
+        holder.title.setText(CATEGORIES[categorySection][position]);
+        holder.imageView.setImageResource(IMAGES[position]);
     }
 
     @Override
@@ -59,11 +64,13 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.ViewHolder> 
 
         public View parentView;
         public SquareImageView imageView;
+        public TextView title;
 
         public ViewHolder(View v) {
             super(v);
             parentView = v;
             imageView = (SquareImageView) v.findViewById(R.id.topic_image);
+            title = (TextView) v.findViewById(R.id.title);
         }
     }
 }

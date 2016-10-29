@@ -46,7 +46,19 @@ public class TopicFragment extends Fragment {
         // Set RecyclerView to use 2 columns
         recycler = (RecyclerView) mainView.findViewById(R.id.fragment_recycler);
         recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recycler.setAdapter(new TopicAdapter());
+
+        int categoryIndex;
+        // Pass array index to adapter in order to pull correct array of titles
+        if (category == Topic.CATEGORIES) {
+            categoryIndex = 0;
+        } else if (category == Topic.LOCATIONS) {
+            categoryIndex = 1;
+        } else {
+            categoryIndex = 2;
+        }
+
+        // Set up RecyclerView Adapter
+        recycler.setAdapter(new TopicAdapter(categoryIndex));
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.spacing);
         recycler.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 

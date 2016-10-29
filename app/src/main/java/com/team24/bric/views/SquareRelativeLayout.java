@@ -2,25 +2,25 @@ package com.team24_jpm.bric.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * Created by harrisonmelton on 10/29/16.
  */
-public class SquareLinearLayout extends LinearLayout {
-    public SquareLinearLayout(Context context) {
+public class SquareRelativeLayout extends RelativeLayout {
+    public SquareRelativeLayout(Context context) {
         super(context);
     }
 
-    public SquareLinearLayout(Context context, AttributeSet attrs) {
+    public SquareRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public SquareLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SquareRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public SquareLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SquareRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
